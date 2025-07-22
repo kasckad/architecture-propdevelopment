@@ -1,0 +1,63 @@
+---
+# view-only
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: view-only-binding
+subjects:
+  - kind: Group
+    name: "analysts"
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: "testers"
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: "monitoring"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: view-only
+  apiGroup: rbac.authorization.k8s.io
+---
+# developer
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: developer-binding
+subjects:
+  - kind: Group
+    name: "developers"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+---
+# security-reader
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: security-reader-binding
+  namespace: default
+subjects:
+  - kind: Group
+    name: "security-team"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: security-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+# admin-cluster
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-cluster-binding
+subjects:
+  - kind: Group
+    name: "system-admins"
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: admin-cluster
+  apiGroup: rbac.authorization.k8s.io
